@@ -23,6 +23,7 @@ require_once __DIR__ . '/MakeUrl.php';
 require_once __DIR__ . '/Param.php';
 require_once __DIR__ . '/PrepareAuth.php';
 require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
 require_once __DIR__ . '/PrepareHeaders.php';
 require_once __DIR__ . '/PrepareMethod.php';
 require_once __DIR__ . '/PrepareParams.php';
@@ -59,6 +60,8 @@ DnsLookupUtility::setRegistrar(function (DnsLookupUtility $u): void {
     $u->prepare_params = [DnsLookupPrepareParams::class, 'call'];
     $u->prepare_path = [DnsLookupPreparePath::class, 'call'];
     $u->prepare_query = [DnsLookupPrepareQuery::class, 'call'];
+    $u->graphql_body = [DnsLookupGraphql::class, 'body'];
+    $u->graphql_errors = [DnsLookupGraphql::class, 'errors'];
     $u->result_basic = [DnsLookupResultBasic::class, 'call'];
     $u->result_body = [DnsLookupResultBody::class, 'call'];
     $u->result_headers = [DnsLookupResultHeaders::class, 'call'];

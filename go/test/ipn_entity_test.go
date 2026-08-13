@@ -44,7 +44,7 @@ func TestIpnEntity(t *testing.T) {
 		// The basic flow consumes synthetic IDs from the fixture. In live mode
 		// without an *_ENTID env override, those IDs hit the live API and 4xx.
 		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set DNSLOOKUP_TEST_IPN_ENTID JSON to run live")
+			t.Skip("live entity test uses synthetic IDs from fixture — set DNS_LOOKUP_TEST_IPN_ENTID JSON to run live")
 			return
 		}
 		client := setup.client
@@ -110,38 +110,38 @@ func ipnBasicSetup(extra map[string]any) *entityTestSetup {
 	// Detect ENTID env override before envOverride consumes it. When live
 	// mode is on without a real override, the basic test runs against synthetic
 	// IDs from the fixture and 4xx's. Surface this so the test can skip.
-	entidEnvRaw := os.Getenv("DNSLOOKUP_TEST_IPN_ENTID")
+	entidEnvRaw := os.Getenv("DNS_LOOKUP_TEST_IPN_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 
 	env := envOverride(map[string]any{
-		"DNSLOOKUP_TEST_IPN_ENTID": idmap,
-		"DNSLOOKUP_TEST_LIVE":      "FALSE",
-		"DNSLOOKUP_TEST_EXPLAIN":   "FALSE",
-		"DNSLOOKUP_APIKEY":         "NONE",
+		"DNS_LOOKUP_TEST_IPN_ENTID": idmap,
+		"DNS_LOOKUP_TEST_LIVE":      "FALSE",
+		"DNS_LOOKUP_TEST_EXPLAIN":   "FALSE",
+		"DNS_LOOKUP_APIKEY":         "NONE",
 	})
 
-	idmapResolved := core.ToMapAny(env["DNSLOOKUP_TEST_IPN_ENTID"])
+	idmapResolved := core.ToMapAny(env["DNS_LOOKUP_TEST_IPN_ENTID"])
 	if idmapResolved == nil {
 		idmapResolved = core.ToMapAny(idmap)
 	}
 
-	if env["DNSLOOKUP_TEST_LIVE"] == "TRUE" {
+	if env["DNS_LOOKUP_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
-				"apikey": env["DNSLOOKUP_APIKEY"],
+				"apikey": env["DNS_LOOKUP_APIKEY"],
 			},
 			extra,
 		})
 		client = sdk.NewDnsLookupSDK(core.ToMapAny(mergedOpts))
 	}
 
-	live := env["DNSLOOKUP_TEST_LIVE"] == "TRUE"
+	live := env["DNS_LOOKUP_TEST_LIVE"] == "TRUE"
 	return &entityTestSetup{
 		client:        client,
 		data:          entityData,
 		idmap:         idmapResolved,
 		env:           env,
-		explain:       env["DNSLOOKUP_TEST_EXPLAIN"] == "TRUE",
+		explain:       env["DNS_LOOKUP_TEST_EXPLAIN"] == "TRUE",
 		live:          live,
 		syntheticOnly: live && !idmapOverridden,
 		now:           time.Now().UnixMilli(),

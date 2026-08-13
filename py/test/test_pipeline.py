@@ -16,11 +16,11 @@
 import pytest
 
 from dnslookup_sdk import DnsLookupSDK
-from core.error import DnsLookupError
-from core.result import DnsLookupResult
-from core.response import DnsLookupResponse
-from core.spec import DnsLookupSpec
-from feature.base_feature import DnsLookupBaseFeature
+from dnslookup_sdk.core.error import DnsLookupError
+from dnslookup_sdk.core.result import DnsLookupResult
+from dnslookup_sdk.core.response import DnsLookupResponse
+from dnslookup_sdk.core.spec import DnsLookupSpec
+from dnslookup_sdk.feature.base_feature import DnsLookupBaseFeature
 
 
 def _client():

@@ -61,16 +61,16 @@ function domain_direct_setup(mockres)
   local calls = {}
 
   local env = runner.env_override({
-    ["DNSLOOKUP_TEST_DOMAIN_ENTID"] = {},
-    ["DNSLOOKUP_TEST_LIVE"] = "FALSE",
-    ["DNSLOOKUP_APIKEY"] = "NONE",
+    ["DNS_LOOKUP_TEST_DOMAIN_ENTID"] = {},
+    ["DNS_LOOKUP_TEST_LIVE"] = "FALSE",
+    ["DNS_LOOKUP_APIKEY"] = "NONE",
   })
 
-  local live = env["DNSLOOKUP_TEST_LIVE"] == "TRUE"
+  local live = env["DNS_LOOKUP_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {
-      apikey = env["DNSLOOKUP_APIKEY"],
+      apikey = env["DNS_LOOKUP_APIKEY"],
     }
     local client = sdk.new(merged_opts)
     return {

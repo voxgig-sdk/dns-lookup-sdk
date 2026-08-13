@@ -33,7 +33,7 @@ class RedactEntityTest extends TestCase
         // The basic flow consumes synthetic IDs from the fixture. In live mode
         // without an *_ENTID env override, those IDs hit the live API and 4xx.
         if (!empty($setup["synthetic_only"])) {
-            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set DNSLOOKUP_TEST_REDACT_ENTID JSON to run live");
+            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set DNS_LOOKUP_TEST_REDACT_ENTID JSON to run live");
             return;
         }
         $client = $setup["client"];
@@ -44,7 +44,7 @@ class RedactEntityTest extends TestCase
             Vs::getpath($setup["data"], "new.redact"), "redact_ref01"));
 
         $redact_ref01_data_result = $redact_ref01_ent->create($redact_ref01_data, null);
-        $redact_ref01_data = Helpers::to_map($redact_ref01_data_result);
+        $redact_ref01_data = Helpers::to_map(is_object($redact_ref01_data_result) && method_exists($redact_ref01_data_result, 'data_get') ? $redact_ref01_data_result->data_get() : $redact_ref01_data_result);
         $this->assertNotNull($redact_ref01_data);
 
     }
@@ -72,39 +72,39 @@ function redact_basic_setup($extra)
     // Detect ENTID env override before envOverride consumes it. When live
     // mode is on without a real override, the basic test runs against synthetic
     // IDs from the fixture and 4xx's. Surface this so the test can skip.
-    $entid_env_raw = getenv("DNSLOOKUP_TEST_REDACT_ENTID");
+    $entid_env_raw = getenv("DNS_LOOKUP_TEST_REDACT_ENTID");
     $idmap_overridden = $entid_env_raw !== false && str_starts_with(trim($entid_env_raw), "{");
 
     $env = Runner::env_override([
-        "DNSLOOKUP_TEST_REDACT_ENTID" => $idmap,
-        "DNSLOOKUP_TEST_LIVE" => "FALSE",
-        "DNSLOOKUP_TEST_EXPLAIN" => "FALSE",
-        "DNSLOOKUP_APIKEY" => "NONE",
+        "DNS_LOOKUP_TEST_REDACT_ENTID" => $idmap,
+        "DNS_LOOKUP_TEST_LIVE" => "FALSE",
+        "DNS_LOOKUP_TEST_EXPLAIN" => "FALSE",
+        "DNS_LOOKUP_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
-        $env["DNSLOOKUP_TEST_REDACT_ENTID"]);
+        $env["DNS_LOOKUP_TEST_REDACT_ENTID"]);
     if ($idmap_resolved === null) {
         $idmap_resolved = Helpers::to_map($idmap);
     }
 
-    if ($env["DNSLOOKUP_TEST_LIVE"] === "TRUE") {
+    if ($env["DNS_LOOKUP_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["DNSLOOKUP_APIKEY"],
+                "apikey" => $env["DNS_LOOKUP_APIKEY"],
             ],
             $extra ?? [],
         ]);
         $client = new DnsLookupSDK(Helpers::to_map($merged_opts));
     }
 
-    $live = $env["DNSLOOKUP_TEST_LIVE"] === "TRUE";
+    $live = $env["DNS_LOOKUP_TEST_LIVE"] === "TRUE";
     return [
         "client" => $client,
         "data" => $entity_data,
         "idmap" => $idmap_resolved,
         "env" => $env,
-        "explain" => $env["DNSLOOKUP_TEST_EXPLAIN"] === "TRUE",
+        "explain" => $env["DNS_LOOKUP_TEST_EXPLAIN"] === "TRUE",
         "live" => $live,
         "synthetic_only" => $live && !$idmap_overridden,
         "now" => (int)(microtime(true) * 1000),

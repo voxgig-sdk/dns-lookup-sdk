@@ -71,16 +71,16 @@ function generate_direct_setup($mockres)
     $calls = new \ArrayObject();
 
     $env = Runner::env_override([
-        "DNSLOOKUP_TEST_GENERATE_ENTID" => [],
-        "DNSLOOKUP_TEST_LIVE" => "FALSE",
-        "DNSLOOKUP_APIKEY" => "NONE",
+        "DNS_LOOKUP_TEST_GENERATE_ENTID" => [],
+        "DNS_LOOKUP_TEST_LIVE" => "FALSE",
+        "DNS_LOOKUP_APIKEY" => "NONE",
     ]);
 
-    $live = $env["DNSLOOKUP_TEST_LIVE"] === "TRUE";
+    $live = $env["DNS_LOOKUP_TEST_LIVE"] === "TRUE";
 
     if ($live) {
         $merged_opts = [
-            "apikey" => $env["DNSLOOKUP_APIKEY"],
+            "apikey" => $env["DNS_LOOKUP_APIKEY"],
         ];
         $client = new DnsLookupSDK($merged_opts);
         return [

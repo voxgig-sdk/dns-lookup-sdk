@@ -23,8 +23,8 @@ module DnsLookupTestRunner
   end
 
   def self.env_override(m)
-    live = getenv("DNSLOOKUP_TEST_LIVE")
-    override = getenv("DNSLOOKUP_TEST_OVERRIDE")
+    live = getenv("DNS_LOOKUP_TEST_LIVE")
+    override = getenv("DNS_LOOKUP_TEST_OVERRIDE")
 
     if live == "TRUE" || override == "TRUE"
       m.each_key do |key|
@@ -44,8 +44,8 @@ module DnsLookupTestRunner
       end
     end
 
-    explain = getenv("DNSLOOKUP_TEST_EXPLAIN")
-    m["DNSLOOKUP_TEST_EXPLAIN"] = explain if explain && !explain.empty?
+    explain = getenv("DNS_LOOKUP_TEST_EXPLAIN")
+    m["DNS_LOOKUP_TEST_EXPLAIN"] = explain if explain && !explain.empty?
 
     m
   end

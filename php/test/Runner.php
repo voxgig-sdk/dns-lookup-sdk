@@ -43,8 +43,8 @@ class DnsLookupTestRunner
 
     public static function env_override(array $m): array
     {
-        $live = self::getenv('DNSLOOKUP_TEST_LIVE');
-        $override = self::getenv('DNSLOOKUP_TEST_OVERRIDE');
+        $live = self::getenv('DNS_LOOKUP_TEST_LIVE');
+        $override = self::getenv('DNS_LOOKUP_TEST_OVERRIDE');
 
         if ($live === 'TRUE' || $override === 'TRUE') {
             foreach (array_keys($m) as $key) {
@@ -63,9 +63,9 @@ class DnsLookupTestRunner
             }
         }
 
-        $explain = self::getenv('DNSLOOKUP_TEST_EXPLAIN');
+        $explain = self::getenv('DNS_LOOKUP_TEST_EXPLAIN');
         if ($explain !== null && $explain !== '') {
-            $m['DNSLOOKUP_TEST_EXPLAIN'] = $explain;
+            $m['DNS_LOOKUP_TEST_EXPLAIN'] = $explain;
         }
 
         return $m;

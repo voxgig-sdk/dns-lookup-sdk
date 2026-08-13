@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from dnslookup_sdk.utility.voxgig_struct import voxgig_struct as vs
 from dnslookup_sdk import DnsLookupSDK
-from core import helpers
+from dnslookup_sdk.core import helpers
 from test import runner
 
 
@@ -58,16 +58,16 @@ def _ssl_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "DNSLOOKUP_TEST_SSL_ENTID": {},
-        "DNSLOOKUP_TEST_LIVE": "FALSE",
-        "DNSLOOKUP_APIKEY": "NONE",
+        "DNS_LOOKUP_TEST_SSL_ENTID": {},
+        "DNS_LOOKUP_TEST_LIVE": "FALSE",
+        "DNS_LOOKUP_APIKEY": "NONE",
     })
 
-    live = env.get("DNSLOOKUP_TEST_LIVE") == "TRUE"
+    live = env.get("DNS_LOOKUP_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {
-            "apikey": env.get("DNSLOOKUP_APIKEY"),
+            "apikey": env.get("DNS_LOOKUP_APIKEY"),
         }
         client = DnsLookupSDK(merged_opts)
         return {

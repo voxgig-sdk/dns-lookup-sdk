@@ -19,11 +19,15 @@ import {
 describe('IpnDirect', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when DNSLOOKUP_TEST_LIVE=TRUE.
-  afterEach(liveDelay('DNSLOOKUP_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when DNS_LOOKUP_TEST_LIVE=TRUE.
+  afterEach(liveDelay('DNS_LOOKUP_TEST_LIVE'))
 
   test('direct-exists', async () => {
     const sdk = new DnsLookupSDK({
+      // Concrete base: a live construction must satisfy any server
+      // variables a templated base URL declares; overriding base with a
+      // literal (as the direct flow tests do) sidesteps the requirement.
+      base: 'http://localhost:8080',
       system: { fetch: async () => ({}) }
     })
     assert('function' === typeof sdk.direct)
@@ -72,19 +76,19 @@ function directSetup(mockres?: any) {
   const calls: any[] = []
 
   const env = envOverride({
-    'DNSLOOKUP_TEST_IPN_ENTID': {},
-    'DNSLOOKUP_TEST_LIVE': 'FALSE',
-    'DNSLOOKUP_APIKEY': 'NONE',
+    'DNS_LOOKUP_TEST_IPN_ENTID': {},
+    'DNS_LOOKUP_TEST_LIVE': 'FALSE',
+    'DNS_LOOKUP_APIKEY': 'NONE',
   })
 
-  const live = 'TRUE' === env.DNSLOOKUP_TEST_LIVE
+  const live = 'TRUE' === env.DNS_LOOKUP_TEST_LIVE
 
   if (live) {
     const client = new DnsLookupSDK({
-      apikey: env.DNSLOOKUP_APIKEY,
+      apikey: env.DNS_LOOKUP_APIKEY,
     })
 
-    let idmap: any = env['DNSLOOKUP_TEST_IPN_ENTID']
+    let idmap: any = env['DNS_LOOKUP_TEST_IPN_ENTID']
     if ('string' === typeof idmap && idmap.startsWith('{')) {
       idmap = JSON.parse(idmap)
     }

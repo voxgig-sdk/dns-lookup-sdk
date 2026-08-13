@@ -29,7 +29,7 @@ describe("RedactEntity", function()
     -- The basic flow consumes synthetic IDs from the fixture. In live mode
     -- without an *_ENTID env override, those IDs hit the live API and 4xx.
     if setup.synthetic_only then
-      pending("live entity test uses synthetic IDs from fixture — set DNSLOOKUP_TEST_REDACT_ENTID JSON to run live")
+      pending("live entity test uses synthetic IDs from fixture — set DNS_LOOKUP_TEST_REDACT_ENTID JSON to run live")
       return
     end
     local client = setup.client
@@ -41,7 +41,7 @@ describe("RedactEntity", function()
 
     local redact_ref01_data_result, err = redact_ref01_ent:create(redact_ref01_data, nil)
     assert.is_nil(err)
-    redact_ref01_data = helpers.to_map(redact_ref01_data_result)
+    redact_ref01_data = helpers.to_map(type(redact_ref01_data_result) == 'table' and redact_ref01_data_result.data_get and redact_ref01_data_result:data_get() or redact_ref01_data_result)
     assert.is_not_nil(redact_ref01_data)
 
   end)
@@ -79,39 +79,39 @@ function redact_basic_setup(extra)
   -- Detect ENTID env override before envOverride consumes it. When live
   -- mode is on without a real override, the basic test runs against synthetic
   -- IDs from the fixture and 4xx's. Surface this so the test can skip.
-  local entid_env_raw = os.getenv("DNSLOOKUP_TEST_REDACT_ENTID")
+  local entid_env_raw = os.getenv("DNS_LOOKUP_TEST_REDACT_ENTID")
   local idmap_overridden = entid_env_raw ~= nil and entid_env_raw:match("^%s*{") ~= nil
 
   local env = runner.env_override({
-    ["DNSLOOKUP_TEST_REDACT_ENTID"] = idmap,
-    ["DNSLOOKUP_TEST_LIVE"] = "FALSE",
-    ["DNSLOOKUP_TEST_EXPLAIN"] = "FALSE",
-    ["DNSLOOKUP_APIKEY"] = "NONE",
+    ["DNS_LOOKUP_TEST_REDACT_ENTID"] = idmap,
+    ["DNS_LOOKUP_TEST_LIVE"] = "FALSE",
+    ["DNS_LOOKUP_TEST_EXPLAIN"] = "FALSE",
+    ["DNS_LOOKUP_APIKEY"] = "NONE",
   })
 
   local idmap_resolved = helpers.to_map(
-    env["DNSLOOKUP_TEST_REDACT_ENTID"])
+    env["DNS_LOOKUP_TEST_REDACT_ENTID"])
   if idmap_resolved == nil then
     idmap_resolved = helpers.to_map(idmap)
   end
 
-  if env["DNSLOOKUP_TEST_LIVE"] == "TRUE" then
+  if env["DNS_LOOKUP_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
       {
-        apikey = env["DNSLOOKUP_APIKEY"],
+        apikey = env["DNS_LOOKUP_APIKEY"],
       },
       extra or {},
     })
     client = sdk.new(helpers.to_map(merged_opts))
   end
 
-  local live = env["DNSLOOKUP_TEST_LIVE"] == "TRUE"
+  local live = env["DNS_LOOKUP_TEST_LIVE"] == "TRUE"
   return {
     client = client,
     data = entity_data,
     idmap = idmap_resolved,
     env = env,
-    explain = env["DNSLOOKUP_TEST_EXPLAIN"] == "TRUE",
+    explain = env["DNS_LOOKUP_TEST_EXPLAIN"] == "TRUE",
     live = live,
     synthetic_only = live and not idmap_overridden,
     now = os.time() * 1000,

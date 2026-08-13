@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# DnsLookup SDK exists test
 
 import pytest
 from dnslookup_sdk import DnsLookupSDK

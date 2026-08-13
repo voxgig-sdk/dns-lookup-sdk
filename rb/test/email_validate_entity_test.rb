@@ -26,7 +26,7 @@ class EmailValidateEntityTest < Minitest::Test
     # The basic flow consumes synthetic IDs from the fixture. In live mode
     # without an *_ENTID env override, those IDs hit the live API and 4xx.
     if setup[:synthetic_only]
-      skip "live entity test uses synthetic IDs from fixture — set DNSLOOKUP_TEST_EMAIL_VALIDATE_ENTID JSON to run live"
+      skip "live entity test uses synthetic IDs from fixture — set DNS_LOOKUP_TEST_EMAIL_VALIDATE_ENTID JSON to run live"
       return
     end
     client = setup[:client]
@@ -74,39 +74,39 @@ def email_validate_basic_setup(extra)
   # Detect ENTID env override before envOverride consumes it. When live
   # mode is on without a real override, the basic test runs against synthetic
   # IDs from the fixture and 4xx's. Surface this so the test can skip.
-  entid_env_raw = ENV["DNSLOOKUP_TEST_EMAIL_VALIDATE_ENTID"]
+  entid_env_raw = ENV["DNS_LOOKUP_TEST_EMAIL_VALIDATE_ENTID"]
   idmap_overridden = !entid_env_raw.nil? && entid_env_raw.strip.start_with?("{")
 
   env = Runner.env_override({
-    "DNSLOOKUP_TEST_EMAIL_VALIDATE_ENTID" => idmap,
-    "DNSLOOKUP_TEST_LIVE" => "FALSE",
-    "DNSLOOKUP_TEST_EXPLAIN" => "FALSE",
-    "DNSLOOKUP_APIKEY" => "NONE",
+    "DNS_LOOKUP_TEST_EMAIL_VALIDATE_ENTID" => idmap,
+    "DNS_LOOKUP_TEST_LIVE" => "FALSE",
+    "DNS_LOOKUP_TEST_EXPLAIN" => "FALSE",
+    "DNS_LOOKUP_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
-    env["DNSLOOKUP_TEST_EMAIL_VALIDATE_ENTID"])
+    env["DNS_LOOKUP_TEST_EMAIL_VALIDATE_ENTID"])
   if idmap_resolved.nil?
     idmap_resolved = Helpers.to_map(idmap)
   end
 
-  if env["DNSLOOKUP_TEST_LIVE"] == "TRUE"
+  if env["DNS_LOOKUP_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["DNSLOOKUP_APIKEY"],
+        "apikey" => env["DNS_LOOKUP_APIKEY"],
       },
       extra || {},
     ])
     client = DnsLookupSDK.new(Helpers.to_map(merged_opts))
   end
 
-  live = env["DNSLOOKUP_TEST_LIVE"] == "TRUE"
+  live = env["DNS_LOOKUP_TEST_LIVE"] == "TRUE"
   {
     client: client,
     data: entity_data,
     idmap: idmap_resolved,
     env: env,
-    explain: env["DNSLOOKUP_TEST_EXPLAIN"] == "TRUE",
+    explain: env["DNS_LOOKUP_TEST_EXPLAIN"] == "TRUE",
     live: live,
     synthetic_only: live && !idmap_overridden,
     now: (Time.now.to_f * 1000).to_i,

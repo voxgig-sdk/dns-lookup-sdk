@@ -36,9 +36,10 @@ func TestDomainDirect(t *testing.T) {
 			"params": map[string]any{},
 		})
 		if setup.live {
-			// Live mode is lenient: synthetic IDs frequently 4xx and the
-			// list-response shape varies wildly across public APIs. Skip
-			// rather than fail when the call doesn't return a usable list.
+			// Live-mode leniency is a model decision
+			// (main.kit.test.live.strict): synthetic IDs 4xx constantly
+			// against an arbitrary public API, so the default SKIPS here.
+			// A project that owns its test server sets strict and FAILS.
 			if err != nil {
 				t.Skipf("list call failed (likely synthetic IDs against live API): %v", err)
 			}
@@ -91,21 +92,21 @@ func domainDirectSetup(mockres any) *domainDirectSetupResult {
 	calls := &[]map[string]any{}
 
 	env := envOverride(map[string]any{
-		"DNSLOOKUP_TEST_DOMAIN_ENTID": map[string]any{},
-		"DNSLOOKUP_TEST_LIVE":    "FALSE",
-		"DNSLOOKUP_APIKEY":       "NONE",
+		"DNS_LOOKUP_TEST_DOMAIN_ENTID": map[string]any{},
+		"DNS_LOOKUP_TEST_LIVE":    "FALSE",
+		"DNS_LOOKUP_APIKEY":       "NONE",
 	})
 
-	live := env["DNSLOOKUP_TEST_LIVE"] == "TRUE"
+	live := env["DNS_LOOKUP_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
-			"apikey": env["DNSLOOKUP_APIKEY"],
+			"apikey": env["DNS_LOOKUP_APIKEY"],
 		}
 		client := sdk.NewDnsLookupSDK(mergedOpts)
 
 		idmap := map[string]any{}
-		if entidRaw, ok := env["DNSLOOKUP_TEST_DOMAIN_ENTID"]; ok {
+		if entidRaw, ok := env["DNS_LOOKUP_TEST_DOMAIN_ENTID"]; ok {
 			if entidStr, ok := entidRaw.(string); ok && strings.HasPrefix(entidStr, "{") {
 				json.Unmarshal([]byte(entidStr), &idmap)
 			} else if entidMap, ok := entidRaw.(map[string]any); ok {

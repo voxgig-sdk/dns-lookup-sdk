@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ DnsLookupUtility.registrar = ->(u) {
   u.prepare_params = DnsLookupUtilities::PrepareParams
   u.prepare_path = DnsLookupUtilities::PreparePath
   u.prepare_query = DnsLookupUtilities::PrepareQuery
+  u.graphql_body = DnsLookupUtilities::GraphqlBody
+  u.graphql_errors = DnsLookupUtilities::GraphqlErrors
   u.result_basic = DnsLookupUtilities::ResultBasic
   u.result_body = DnsLookupUtilities::ResultBody
   u.result_headers = DnsLookupUtilities::ResultHeaders

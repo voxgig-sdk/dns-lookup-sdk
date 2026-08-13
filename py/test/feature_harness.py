@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import DnsLookupControl
-from core.error import DnsLookupError
-from core.result import DnsLookupResult
-from core.spec import DnsLookupSpec
+from dnslookup_sdk.config import make_config
+from dnslookup_sdk.features import _make_feature
+from dnslookup_sdk.core.control import DnsLookupControl
+from dnslookup_sdk.core.error import DnsLookupError
+from dnslookup_sdk.core.result import DnsLookupResult
+from dnslookup_sdk.core.spec import DnsLookupSpec
 
 
 # True when this SDK was generated with the named feature.
