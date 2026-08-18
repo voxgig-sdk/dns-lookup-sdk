@@ -28,7 +28,7 @@ class DnsLookupSDK
     utility = DnsLookupUtility.new
     @_utility = utility
 
-    config = DnsLookupConfig.make_config
+    config = DnsLookupConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,

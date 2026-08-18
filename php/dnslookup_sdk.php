@@ -40,7 +40,7 @@ class DnsLookupSDK
         $utility = new DnsLookupUtility();
         $this->_utility = $utility;
 
-        $config = DnsLookupConfig::make_config();
+        $config = DnsLookupConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,
