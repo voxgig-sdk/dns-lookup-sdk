@@ -19,6 +19,9 @@ module DnsLookupConfig
     {
       "main" => {
         "name" => "DnsLookup",
+        "slug" => "dns-lookup",
+        "version" => "0.0.1",
+        "target" => "rb",
       },
       "feature" => {
         "test" => {
@@ -195,6 +198,7 @@ module DnsLookupConfig
             },
             {
               "name" => "suggest",
+              "short" => "Suggested correction for typos",
               "type" => "`$STRING`",
             },
             {
@@ -450,6 +454,7 @@ module DnsLookupConfig
             },
             {
               "name" => "language",
+              "short" => "BCP 47 language tag",
               "type" => "`$STRING`",
             },
             {
@@ -460,6 +465,7 @@ module DnsLookupConfig
                   "type" => "`$STRING`",
                 },
               },
+              "short" => "Text to check",
               "type" => "`$STRING`",
             },
           ],
@@ -578,6 +584,7 @@ module DnsLookupConfig
             },
             {
               "name" => "entities",
+              "short" => "Include detected entity positions in response",
               "type" => "`$ARRAY`",
             },
             {
@@ -586,6 +593,7 @@ module DnsLookupConfig
             },
             {
               "name" => "redact",
+              "short" => "Comma-separated PII types to redact.",
               "type" => "`$STRING`",
             },
             {
@@ -595,6 +603,7 @@ module DnsLookupConfig
             {
               "name" => "text",
               "req" => true,
+              "short" => "Text to redact",
               "type" => "`$STRING`",
             },
           ],
