@@ -42,6 +42,7 @@ class DnsLookupConfig
           'options' => [
             'active' => false,
           ],
+          'transport' => 'base',
         ],
             ],
             "options" => [

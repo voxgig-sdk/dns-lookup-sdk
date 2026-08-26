@@ -28,6 +28,7 @@ module DnsLookupConfig
           "options" => {
             "active" => false,
           },
+          "transport" => "base",
         },
       },
       "options" => {
