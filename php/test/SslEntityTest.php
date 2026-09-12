@@ -124,7 +124,7 @@ function ssl_basic_setup($extra)
         "DNS_LOOKUP_TEST_SSL_ENTID" => $idmap,
         "DNS_LOOKUP_TEST_LIVE" => "FALSE",
         "DNS_LOOKUP_TEST_EXPLAIN" => "FALSE",
-        "DNS_LOOKUP_APIKEY" => "NONE",
+        "DNS_LOOKUP_APIKEY" => "",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -135,10 +135,17 @@ function ssl_basic_setup($extra)
 
     if ($env["DNS_LOOKUP_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
+            // FIRST, so the generated fields below win: sdk-test-control.json's
+            // test.client.options adds to the live client, it does not redirect it.
+            Runner::live_client_options(),
             [
                 "apikey" => $env["DNS_LOOKUP_APIKEY"],
             ],
-            $extra ?? [],
+            // ismap, not a plain "?? []" default: an empty PHP array is a
+            // LIST, and a non-map later entry REPLACES the accumulated map in
+            // merge - so the no-extras call discarded live_client_options()
+            // and the apikey/server map above it.
+            Vs::ismap($extra) ? $extra : new \stdClass(),
         ]);
         $client = new DnsLookupSDK(Helpers::to_map($merged_opts));
     }

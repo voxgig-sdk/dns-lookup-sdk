@@ -81,7 +81,7 @@ def utility_basic_setup(extra)
     "DNS_LOOKUP_TEST_UTILITY_ENTID" => idmap,
     "DNS_LOOKUP_TEST_LIVE" => "FALSE",
     "DNS_LOOKUP_TEST_EXPLAIN" => "FALSE",
-    "DNS_LOOKUP_APIKEY" => "NONE",
+    "DNS_LOOKUP_APIKEY" => "",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -92,6 +92,9 @@ def utility_basic_setup(extra)
 
   if env["DNS_LOOKUP_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
+      # FIRST, so the generated fields below win: sdk-test-control.json's
+      # test.client.options adds to the live client, it does not redirect it.
+      Runner.live_client_options,
       {
         "apikey" => env["DNS_LOOKUP_APIKEY"],
       },

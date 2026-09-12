@@ -100,14 +100,22 @@ func ipnDirectSetup(mockres any) *ipnDirectSetupResult {
 	env := envOverride(map[string]any{
 		"DNS_LOOKUP_TEST_IPN_ENTID": map[string]any{},
 		"DNS_LOOKUP_TEST_LIVE":    "FALSE",
-		"DNS_LOOKUP_APIKEY":       "NONE",
+		"DNS_LOOKUP_APIKEY":       "",
 	})
 
 	live := env["DNS_LOOKUP_TEST_LIVE"] == "TRUE"
 
 	if live {
-		mergedOpts := map[string]any{
+		// sdk-test-control.json's test.client.options seeds the live
+		// client; the generated fields below overwrite anything they name.
+		mergedOpts := map[string]any{}
+		for k, v := range liveClientOptions() {
+			mergedOpts[k] = v
+		}
+		for k, v := range map[string]any{
 			"apikey": env["DNS_LOOKUP_APIKEY"],
+		} {
+			mergedOpts[k] = v
 		}
 		client := sdk.NewDnsLookupSDK(mergedOpts)
 

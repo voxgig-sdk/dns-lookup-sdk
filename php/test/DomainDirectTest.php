@@ -68,15 +68,17 @@ function domain_direct_setup($mockres)
     $env = Runner::env_override([
         "DNS_LOOKUP_TEST_DOMAIN_ENTID" => [],
         "DNS_LOOKUP_TEST_LIVE" => "FALSE",
-        "DNS_LOOKUP_APIKEY" => "NONE",
+        "DNS_LOOKUP_APIKEY" => "",
     ]);
 
     $live = $env["DNS_LOOKUP_TEST_LIVE"] === "TRUE";
 
     if ($live) {
-        $merged_opts = [
+        // Merged so the generated fields win: sdk-test-control.json's
+        // test.client.options adds to the live client, it does not redirect it.
+        $merged_opts = array_merge(Runner::live_client_options(), [
             "apikey" => $env["DNS_LOOKUP_APIKEY"],
-        ];
+        ]);
         $client = new DnsLookupSDK($merged_opts);
         return [
             "client" => $client,
