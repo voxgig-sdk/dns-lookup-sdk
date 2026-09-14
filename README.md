@@ -105,7 +105,7 @@ local result, err = client:Utility():load({ input = "example" })
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
+| TypeScript | `@voxgig-sdk/dns-lookup-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
 | Python | `voxgig-sdk-dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
 | PHP | `voxgig-sdk/dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/dns-lookup-sdk/go` | `go get github.com/voxgig-sdk/dns-lookup-sdk/go@latest` |
@@ -119,7 +119,7 @@ local result, err = client:Utility():load({ input = "example" })
 ### TypeScript
 
 ```ts
-import { DnsLookupSDK } from '@voxgig-sdk/dns-lookup'
+import { DnsLookupSDK } from '@voxgig-sdk/dns-lookup-sdk'
 
 const client = new DnsLookupSDK({
   apikey: process.env.DNS_LOOKUP_APIKEY,

@@ -28,7 +28,7 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { DnsLookupSDK } from '@voxgig-sdk/dns-lookup'
+import { DnsLookupSDK } from '@voxgig-sdk/dns-lookup-sdk'
 
 const client = new DnsLookupSDK({
   apikey: process.env.DNS_LOOKUP_APIKEY,
@@ -805,7 +805,7 @@ dns-lookup/
 Import the SDK from the package root:
 
 ```ts
-import { DnsLookupSDK } from '@voxgig-sdk/dns-lookup'
+import { DnsLookupSDK } from '@voxgig-sdk/dns-lookup-sdk'
 ```
 
 ### Entity state
