@@ -1,12 +1,18 @@
 # DnsLookup SDK feature factory
 
 from dnslookup_sdk.feature.base_feature import DnsLookupBaseFeature
+from dnslookup_sdk.feature.ratelimit_feature import DnsLookupRatelimitFeature
+from dnslookup_sdk.feature.retry_feature import DnsLookupRetryFeature
 from dnslookup_sdk.feature.test_feature import DnsLookupTestFeature
+from dnslookup_sdk.feature.timeout_feature import DnsLookupTimeoutFeature
 
 
 _FEATURES = {
     "base": lambda: DnsLookupBaseFeature(),
+    "ratelimit": lambda: DnsLookupRatelimitFeature(),
+    "retry": lambda: DnsLookupRetryFeature(),
     "test": lambda: DnsLookupTestFeature(),
+    "timeout": lambda: DnsLookupTimeoutFeature(),
 }
 
 
