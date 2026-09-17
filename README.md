@@ -105,12 +105,12 @@ local result, err = client:Utility():load({ input = "example" })
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/dns-lookup-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
-| Python | `voxgig-sdk-dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
-| PHP | `voxgig-sdk/dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
+| TypeScript | `@voxgig-sdk/dns-lookup-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/tags) |
+| Python | `voxgig-sdk-dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/tags) |
+| PHP | `voxgig-sdk/dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/tags) |
 | Golang | `github.com/voxgig-sdk/dns-lookup-sdk/go` | `go get github.com/voxgig-sdk/dns-lookup-sdk/go@latest` |
-| Ruby | `voxgig-sdk-dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
-| Lua | `voxgig-sdk-dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/releases) |
+| Ruby | `voxgig-sdk-dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/tags) |
+| Lua | `voxgig-sdk-dns-lookup` | publish pending — [install from git tag](https://github.com/voxgig-sdk/dns-lookup-sdk/tags) |
 | Go CLI | `github.com/voxgig-sdk/dns-lookup-sdk/go-cli` | `go install github.com/voxgig-sdk/dns-lookup-sdk/go-cli/cmd/dns-lookup@latest` |
 | Go MCP server | `github.com/voxgig-sdk/dns-lookup-sdk/go-mcp` | `go get github.com/voxgig-sdk/dns-lookup-sdk/go-mcp@latest` |
 
