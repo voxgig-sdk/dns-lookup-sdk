@@ -19,7 +19,6 @@ import type {
   WhoiListMatch,
 } from '../DnsLookupTypes'
 
-// TODO: needs Entity superclass
 class WhoiEntity extends DnsLookupEntityBase<Whoi> {
 
   constructor(client: DnsLookupSDK, entopts: any) {

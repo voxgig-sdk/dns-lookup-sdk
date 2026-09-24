@@ -19,7 +19,6 @@ import type {
   DomainListMatch,
 } from '../DnsLookupTypes'
 
-// TODO: needs Entity superclass
 class DomainEntity extends DnsLookupEntityBase<Domain> {
 
   constructor(client: DnsLookupSDK, entopts: any) {

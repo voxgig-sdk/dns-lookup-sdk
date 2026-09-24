@@ -19,7 +19,6 @@ import type {
   SslListMatch,
 } from '../DnsLookupTypes'
 
-// TODO: needs Entity superclass
 class SslEntity extends DnsLookupEntityBase<Ssl> {
 
   constructor(client: DnsLookupSDK, entopts: any) {

@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DomainEntity = void 0;
 const DnsLookupEntityBase_1 = require("../DnsLookupEntityBase");
-// TODO: needs Entity superclass
 class DomainEntity extends DnsLookupEntityBase_1.DnsLookupEntityBase {
     constructor(client, entopts) {
         super(client, entopts);
