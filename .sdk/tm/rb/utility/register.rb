@@ -33,6 +33,8 @@ require_relative 'transform_response'
 
 DnsLookupUtility.registrar = ->(u) {
   u.clean = DnsLookupUtilities::Clean
+  u.clean_add = DnsLookupUtilities::CleanAdd
+  u.clean_explain = DnsLookupUtilities::CleanExplain
   u.done = DnsLookupUtilities::Done
   u.make_error = DnsLookupUtilities::MakeError
   u.feature_add = DnsLookupUtilities::FeatureAdd

@@ -37,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 DnsLookupUtility::setRegistrar(function (DnsLookupUtility $u): void {
     $u->clean = [DnsLookupClean::class, 'call'];
+    $u->clean_add = [DnsLookupClean::class, 'add'];
+    $u->clean_explain = [DnsLookupDone::class, 'clean_explain'];
     $u->done = [DnsLookupDone::class, 'call'];
     $u->make_error = [DnsLookupMakeError::class, 'call'];
     $u->feature_add = [DnsLookupFeatureAdd::class, 'call'];
