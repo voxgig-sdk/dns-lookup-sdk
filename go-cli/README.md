@@ -21,6 +21,7 @@ export DNS_LOOKUP_APIKEY=sk_live_xxx
 # 4. Each command line is ONE boru expression, run against the API:
 ./dns-lookup-cli load 1 dns_result            # {id:1} shorthand
 ./dns-lookup-cli load '{id:1}' dns_result       # explicit match map
+./dns-lookup-cli list domain
 
 # 5. Override the API base URL for a single call
 DNS_LOOKUP_BASE=https://api.example.com ./dns-lookup-cli load 1 dns_result
